@@ -69,12 +69,11 @@ public class test1 extends JFrame {
         add(buttonPanel, BorderLayout.SOUTH);
         
         //記分板
-        scoreBoard = new JTextArea(20,20);
+        scoreBoard = new JTextArea(5,10);
         scoreBoard.setEditable(false);
-        scoreBoard.setPreferredSize(new Dimension(100,30)); // 设置记分板的尺寸
         // 将记分板放置在右侧
         JPanel rightPanel = new JPanel(new BorderLayout());
-        rightPanel.add(scoreBoard, BorderLayout.NORTH);
+        rightPanel.add(scoreBoard, BorderLayout.CENTER);
         add(rightPanel, BorderLayout.EAST);
     }
 
