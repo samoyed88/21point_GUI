@@ -1,4 +1,5 @@
 package windows_test;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -195,7 +196,7 @@ public class test1 extends JFrame {
             } 
             if(currentPlayerIndex>=numPlayer.size()) {
                 // 莊家抽牌
-            	outputArea.append("莊家開始抽牌");
+            	outputArea.append("莊家開始抽牌\n");
                 while (numPlayer.get(0).getNum() < 15) {
                     int num = drawCard();
                     if (num == 0) {
@@ -244,36 +245,3 @@ public class test1 extends JFrame {
 	    }
 }
 
-class Player {
-    private int num;
-    private int score;
-
-    public Player() {
-        this.num = 0;
-        this.score = 10;
-    }
-
-    public void numAdd(int num) {
-        this.num += num;
-    }
-
-    public int getNum() {
-        return this.num;
-    }
-
-    public void numReturn() {
-        this.num = 0;
-    }
-
-    public void scoreCal(int dealerNum) {
-        if (this.num > 21) {
-            this.score = 0;
-        } else if (dealerNum > 21 || this.num > dealerNum) {
-            this.score++;
-        }
-    }
-
-    public int getScore() {
-        return this.score;
-    }
-}
