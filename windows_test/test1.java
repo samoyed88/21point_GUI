@@ -71,7 +71,7 @@ public class test1 extends JFrame {
         //記分板
         scoreBoard = new JTextArea(20,20);
         scoreBoard.setEditable(false);
-        scoreBoard.setPreferredSize(new Dimension(150,30)); // 设置记分板的尺寸
+        scoreBoard.setPreferredSize(new Dimension(100,30)); // 设置记分板的尺寸
         // 将记分板放置在右侧
         JPanel rightPanel = new JPanel(new BorderLayout());
         rightPanel.add(scoreBoard, BorderLayout.NORTH);
@@ -108,8 +108,8 @@ public class test1 extends JFrame {
         StringBuilder sb = new StringBuilder();
         for (int i = 1; i < numPlayer.size(); i++) {
         	sb.append("玩家").append(i).append(":\r\n");
-        	sb.append(numPlayer.get(i).getScore()).append("分\r\n");
-        	sb.append("目前點數:").append(numPlayer.get(i).getNum()).append("\n");
+        	sb.append("  ").append(numPlayer.get(i).getScore()).append("分\r\n");
+        	sb.append("  目前點數:").append(numPlayer.get(i).getNum()).append("\n");
         }
         scoreBoard.setText(sb.toString());
     }
