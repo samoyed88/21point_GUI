@@ -150,14 +150,25 @@ public class test1 extends JFrame {
 
     private void finalScore() {
         int score = 0, winner = 0;
+        int tie=0,ties=0;
         for (int i = 1; i < numPlayer.size(); i++) {
             if (numPlayer.get(i).getScore() > score) {
                 score = numPlayer.get(i).getScore();
                 winner = i;
             }
+            else if(numPlayer.get(i).getScore() == score) {
+            	tie=i;
+            	ties=numPlayer.get(i).getScore();
+            }
         }
-        outputArea.append("遊戲結束\n");
-        outputArea.append("玩家" + winner + "是贏家，分數" + score + "分\n");
+        if(tie!=0 && ties==score) {
+        	outputArea.append("遊戲結束\n");
+	        outputArea.append("玩家" + winner + "與玩家"+tie+"平手，分數：" + score + "分\n");
+        }
+        else {
+	        outputArea.append("遊戲結束\n");
+	        outputArea.append("玩家" + winner + "是贏家，分數：" + score + "分\n");
+        }
     }
 
     private class StartButtonListener implements ActionListener {
@@ -189,7 +200,7 @@ public class test1 extends JFrame {
                         endButton.setEnabled(false);
                         startButton.setEnabled(true);
                     } else if (num == 1) {
-                        String input = JOptionPane.showInputDialog("玩家"+currentPlayerIndex+"抽到1，輸入'a'為1，'b'為11");
+                        String input = JOptionPane.showInputDialog("玩家"+i+"抽到1，輸入'a'為1，'b'為11");
                         if (input != null && input.equalsIgnoreCase("b")) {
                             num = 11;
                         }
@@ -207,7 +218,7 @@ public class test1 extends JFrame {
                         endButton.setEnabled(false);
                         startButton.setEnabled(true);
                     } else if (num == 1) {
-                        String input = JOptionPane.showInputDialog("玩家"+currentPlayerIndex+"抽到1，輸入'a'為1，'b'為11");
+                        String input = JOptionPane.showInputDialog("玩家"+i+"抽到1，輸入'a'為1，'b'為11");
                         if (input != null && input.equalsIgnoreCase("b")) {
                             num = 11;
                         }
@@ -268,13 +279,10 @@ public class test1 extends JFrame {
     private class endButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            currentPlayerIndex++;
-            if (currentPlayerIndex > numPlayer.size() - 1) {
                 drawButton.setEnabled(false);
                 stopButton.setEnabled(false);
                 startButton.setEnabled(true);
                 finalScore();
-            }
         }
     }
     private class StopButtonListener implements ActionListener {
