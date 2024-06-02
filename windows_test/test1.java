@@ -15,8 +15,9 @@ public class test1 extends JFrame {
     private JButton startButton, drawButton, stopButton,endButton;
     private int currentPlayerIndex;// 当前玩家的索引
     private int round; // 当前游戏的回合数
-    private JTextField remainingCards;
-    private JTextArea scoreBoard;
+    private int count=1;
+    private JTextField remainingCards;//卡片剩餘面板
+    private JTextArea scoreBoard;//記分板
 
     public test1() {
         setTitle("21點遊戲");
@@ -58,7 +59,7 @@ public class test1 extends JFrame {
         infoPanel.add(remainingCards, BorderLayout.NORTH); // 将剩余牌数量文本框添加到面板顶部
         
         
-        
+        //按鈕面板
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(startButton);
         buttonPanel.add(drawButton);
@@ -94,6 +95,7 @@ public class test1 extends JFrame {
         String card = poker.remove(randomIndex);
         outputArea.append("抽到: " + card + "\n");
         updateRemainingCards(); // 抽牌後更新剩餘牌數量
+        updateScoreBoard();
         if (card.endsWith("J") || card.endsWith("Q") || card.endsWith("K")) {
             return 10;
         } else if (card.endsWith("1")) {
@@ -105,6 +107,9 @@ public class test1 extends JFrame {
     
     private void updateScoreBoard() {
         StringBuilder sb = new StringBuilder();
+        sb.append("莊家").append(":\r\n");
+    	sb.append("  ").append(numPlayer.get(0).getScore()).append("分\r\n");
+    	sb.append("  目前點數:").append(numPlayer.get(0).getNum()).append("\n");
         for (int i = 1; i < numPlayer.size(); i++) {
         	sb.append("玩家").append(i).append(":\r\n");
         	sb.append("  ").append(numPlayer.get(i).getScore()).append("分\r\n");
@@ -171,7 +176,47 @@ public class test1 extends JFrame {
     private class DrawButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (currentPlayerIndex <= numPlayer.size() - 1) {
+        	if(count==1) {
+        		for(int i=0;i<numPlayer.size();i++) {
+        			if(i==0) outputArea.append("莊家");
+        			else outputArea.append("玩家"+i);
+        			int num = drawCard();
+            		if (num == 0) {
+                        JOptionPane.showMessageDialog(null, "牌已抽完");
+                        finalScore();
+                        drawButton.setEnabled(false);
+                        stopButton.setEnabled(false);
+                        endButton.setEnabled(false);
+                        startButton.setEnabled(true);
+                    } else if (num == 1) {
+                        String input = JOptionPane.showInputDialog("玩家"+currentPlayerIndex+"抽到1，輸入'a'為1，'b'為11");
+                        if (input != null && input.equalsIgnoreCase("b")) {
+                            num = 11;
+                        }
+                    }
+            		numPlayer.get(i).numAdd(num);
+        		}
+        		for(int i=1;i<numPlayer.size();i++) {
+        			outputArea.append("玩家"+i);
+        			int num = drawCard();
+            		if (num == 0) {
+                        JOptionPane.showMessageDialog(null, "牌已抽完");
+                        finalScore();
+                        drawButton.setEnabled(false);
+                        stopButton.setEnabled(false);
+                        endButton.setEnabled(false);
+                        startButton.setEnabled(true);
+                    } else if (num == 1) {
+                        String input = JOptionPane.showInputDialog("玩家"+currentPlayerIndex+"抽到1，輸入'a'為1，'b'為11");
+                        if (input != null && input.equalsIgnoreCase("b")) {
+                            num = 11;
+                        }
+                    }
+            		numPlayer.get(i).numAdd(num);
+        		}
+        		count++;
+        	}
+        	else if (currentPlayerIndex <= numPlayer.size() - 1) {
                 int num = drawCard();
                 if (num == 0) {
                     JOptionPane.showMessageDialog(null, "牌已抽完");
@@ -181,7 +226,7 @@ public class test1 extends JFrame {
                     endButton.setEnabled(false);
                     startButton.setEnabled(true);
                 } else if (num == 1) {
-                    String input = JOptionPane.showInputDialog("抽到1，選擇1請輸入a，選擇11請輸入b:");
+                    String input = JOptionPane.showInputDialog("玩家"+currentPlayerIndex+"抽到1，輸入'a'為1，'b'為11");
                     if (input != null && input.equalsIgnoreCase("b")) {
                         num = 11;
                     }
@@ -190,10 +235,11 @@ public class test1 extends JFrame {
                 outputArea.append("玩家" + currentPlayerIndex + "目前點數: " + numPlayer.get(currentPlayerIndex).getNum() + "\n");
                 if (numPlayer.get(currentPlayerIndex).getNum() > 21) {
                     outputArea.append("玩家" + currentPlayerIndex + "爆掉了!\n");
+                    outputArea.append("換下一位玩家:玩家"+(currentPlayerIndex+1));
                     currentPlayerIndex++;
                 }
             } 
-            if(currentPlayerIndex>=numPlayer.size()) {
+        	else if(currentPlayerIndex>=numPlayer.size()) {
                 // 莊家抽牌
             	outputArea.append("莊家開始抽牌\n");
                 while (numPlayer.get(0).getNum() < 15) {
@@ -211,8 +257,9 @@ public class test1 extends JFrame {
                 outputArea.append("莊家點數: " + numPlayer.get(0).getNum() + "\n");
                 grade();
                 currentPlayerIndex = 1;
-                round++;
                 outputArea.append("第" + round + "局結束，請按抽牌開始下一局\n");
+                round++;
+                count=1;
             }
         	updateScoreBoard();
         }
