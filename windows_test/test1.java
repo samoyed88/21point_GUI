@@ -9,12 +9,12 @@ import java.util.List;
 
 @SuppressWarnings("serial")
 public class test1 extends JFrame {
-    private ArrayList<String> poker;
-    private List<Player> numPlayer;
-    private JTextArea outputArea;
-    private JButton startButton, drawButton, stopButton,endButton;
-    private int currentPlayerIndex;// 当前玩家的索引
-    private int round; // 当前游戏的回合数
+    private ArrayList<String> poker;//一副牌
+    private List<Player> numPlayer;//玩家物件陣列
+    private JTextArea outputArea;//主顯示介面
+    private JButton startButton, drawButton, stopButton,endButton;//四個按鈕
+    private int currentPlayerIndex;// 玩家的索引值
+    private int round; // 當前遊戲的回合數
     private int count=1;
     private JTextField remainingCards;//卡片剩餘面板
     private JTextArea scoreBoard;//記分板
@@ -28,10 +28,11 @@ public class test1 extends JFrame {
         poker = new ArrayList<>();
         numPlayer = new ArrayList<>();
 
-        outputArea = new JTextArea();
-        outputArea.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(outputArea);
+        outputArea = new JTextArea();// 創建一個文字區域，用於顯示遊戲信息
+        outputArea.setEditable(false);// 設置文本區域為不可編輯
+        JScrollPane scrollPane = new JScrollPane(outputArea);// 將文本區域放入滾動窗格中
         
+        //創建按鈕
         startButton = new JButton("開始遊戲");
         drawButton = new JButton("抽牌");
         stopButton = new JButton("停止抽牌");
@@ -48,15 +49,15 @@ public class test1 extends JFrame {
         stopButton.addActionListener(new StopButtonListener());
         endButton.addActionListener(new endButtonListener());
         
-        // 创建用于显示剩余牌数量的文本框
+        // 創建一個文字框，用於顯示剩餘牌數量
         remainingCards = new JTextField(5);
-        remainingCards.setEditable(false); // 设置为不可编辑
+        remainingCards.setEditable(false); // 設置文字框為不可編輯
         remainingCards.setHorizontalAlignment(JTextField.CENTER); // 文本居中
-        // 创建一个面板用于放置游戏信息和剩余牌数量
         
+        // 創建一個面板，用於顯示剩餘牌數量
         JPanel infoPanel = new JPanel(new BorderLayout());
-        infoPanel.add(scrollPane, BorderLayout.CENTER); // 将游戏信息添加到面板中间
-        infoPanel.add(remainingCards, BorderLayout.NORTH); // 将剩余牌数量文本框添加到面板顶部
+        infoPanel.add(scrollPane, BorderLayout.CENTER); // 將遊戲信息添加到面板中間
+        infoPanel.add(remainingCards, BorderLayout.NORTH); // 將剩餘牌數量文字框添加到面板頂部
         
         
         //按鈕面板
@@ -69,17 +70,18 @@ public class test1 extends JFrame {
         add(infoPanel, BorderLayout.CENTER); // 将面板添加到窗口中央
         add(buttonPanel, BorderLayout.SOUTH);
         
-        //記分板
+        // 創建一個面板，用於顯示各玩家分數及即時牌點數
         scoreBoard = new JTextArea(5,10);
         scoreBoard.setEditable(false);
-        // 将记分板放置在右侧
+        // 將記分板放置於右側中間
         JPanel rightPanel = new JPanel(new BorderLayout());
         rightPanel.add(scoreBoard, BorderLayout.CENTER);
         add(rightPanel, BorderLayout.EAST);
     }
-
+    
+    //創建一副牌
     private void createPoker() {
-        poker.clear();
+        poker.clear();//清空poker陣列
         String[] suits = {"C", "D", "H", "S"};
         String[] values = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
         for (String suit : suits) {
@@ -89,13 +91,14 @@ public class test1 extends JFrame {
         }
     }
 
+    //抽牌方法
     private int drawCard() {
-        if (poker.isEmpty()) return 0;
-        int randomIndex = (int) (Math.random() * poker.size());
+        if (poker.isEmpty()) return 0;//沒牌傳回0
+        int randomIndex = (int) (Math.random() * poker.size());//隨機一個數字(0~陣列的最大值)
         String card = poker.remove(randomIndex);
         outputArea.append("抽到: " + card + "\n");
         updateRemainingCards(); // 抽牌後更新剩餘牌數量
-        updateScoreBoard();
+        updateScoreBoard();//抽牌後更新記分板
         if (card.endsWith("J") || card.endsWith("Q") || card.endsWith("K")) {
             return 10;
         } else if (card.endsWith("1")) {
@@ -105,6 +108,7 @@ public class test1 extends JFrame {
         }
     }
     
+    //更新記分板
     private void updateScoreBoard() {
         StringBuilder sb = new StringBuilder();
         sb.append("莊家").append(":\r\n");
@@ -117,17 +121,19 @@ public class test1 extends JFrame {
         }
         scoreBoard.setText(sb.toString());
     }
-    
+    //更新剩餘牌數
     private void updateRemainingCards() {
         remainingCards.setText("剩餘牌數量: " + poker.size());
     }
-
+    
+    //開始遊戲
     private void startGame(int players) {
         createPoker();
-        updateRemainingCards(); // 在游戏开始时更新剩余牌数量
-        numPlayer.clear();
+        updateRemainingCards(); // 更新剩餘牌數
+        updateScoreBoard(); //更新計分版
+        numPlayer.clear(); //清空numPlayer物件陣列
         for (int i = 0; i <= players; i++) {
-            numPlayer.add(new Player());
+            numPlayer.add(new Player());//根據玩家數建立物件
         }
         currentPlayerIndex = 1;
         round = 1;
@@ -137,7 +143,7 @@ public class test1 extends JFrame {
         endButton.setEnabled(true);
         startButton.setEnabled(false);
     }
-
+    //分數計算
     private void grade() {
         for (int i = 1; i < numPlayer.size(); i++) {
             numPlayer.get(i).scoreCal(numPlayer.get(0).getNum());
@@ -147,7 +153,7 @@ public class test1 extends JFrame {
         numPlayer.get(0).numReturn();
         updateScoreBoard();
     }
-
+    //最終分數及贏家顯示
     private void finalScore() {
         int score = 0, winner = 0;
         int tie=0,ties=0;
@@ -170,7 +176,8 @@ public class test1 extends JFrame {
 	        outputArea.append("玩家" + winner + "是贏家，分數：" + score + "分\n");
         }
     }
-
+    
+    //開始遊戲按鈕被點擊後動作
     private class StartButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -183,10 +190,13 @@ public class test1 extends JFrame {
             }
         }
     }
-
+    
+    //抽牌按鈕被點擊後動作
     private class DrawButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+        	//第一輪及第二輪為自動發牌
+        	//第一輪抽牌(莊家及玩家各發一張)
         	if(count==1) {
         		for(int i=0;i<numPlayer.size();i++) {
         			if(i==0) outputArea.append("莊家");
@@ -207,6 +217,7 @@ public class test1 extends JFrame {
                     }
             		numPlayer.get(i).numAdd(num);
         		}
+        		//第二輪抽牌：玩家各發一張
         		for(int i=1;i<numPlayer.size();i++) {
         			outputArea.append("玩家"+i);
         			int num = drawCard();
@@ -226,7 +237,9 @@ public class test1 extends JFrame {
             		numPlayer.get(i).numAdd(num);
         		}
         		count++;
+        		outputArea.append("玩家1選擇是否要牌\n");
         	}
+        	//第三輪為各玩家自行選擇是否要牌
         	else if (currentPlayerIndex <= numPlayer.size() - 1) {
                 int num = drawCard();
                 if (num == 0) {
@@ -275,7 +288,8 @@ public class test1 extends JFrame {
         	updateScoreBoard();
         }
     }
-
+    
+    //結束按鈕被點擊後的動作
     private class endButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -285,12 +299,18 @@ public class test1 extends JFrame {
                 finalScore();
         }
     }
+    
+    //停止抽牌被點擊後的動作
     private class StopButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
         	currentPlayerIndex++;
+        	if(currentPlayerIndex<numPlayer.size())outputArea.append("換下一位玩家");
+        	else outputArea.append("按抽牌結束此回合\n");
         }
     }
+    
+    //主程式
 	    public static void main(String[] args) {
 	        SwingUtilities.invokeLater(() -> {
 	            test1 game = new test1();
