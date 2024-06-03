@@ -130,7 +130,6 @@ public class test1 extends JFrame {
     private void startGame(int players) {
         createPoker();
         updateRemainingCards(); // 更新剩餘牌數
-        updateScoreBoard(); //更新計分版
         numPlayer.clear(); //清空numPlayer物件陣列
         for (int i = 0; i <= players; i++) {
             numPlayer.add(new Player());//根據玩家數建立物件
