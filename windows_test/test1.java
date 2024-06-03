@@ -260,7 +260,7 @@ public class test1 extends JFrame {
                 if (numPlayer.get(currentPlayerIndex).getNum() > 21) {
                     outputArea.append("玩家" + currentPlayerIndex + "爆掉了!\n");
                     if((currentPlayerIndex+1)<numPlayer.size())outputArea.append("換下一位玩家:玩家"+(currentPlayerIndex+1)+"\n");
-                    else outputArea.append("按抽牌結束此回合");
+                    else outputArea.append("按抽牌結束此回合\n");
                     currentPlayerIndex++;
                 }
             } 
