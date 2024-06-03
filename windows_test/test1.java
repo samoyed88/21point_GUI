@@ -136,6 +136,7 @@ public class test1 extends JFrame {
         }
         currentPlayerIndex = 1;
         round = 1;
+        count=1;
         outputArea.append("遊戲開始\n");
         drawButton.setEnabled(true);
         stopButton.setEnabled(true);
@@ -209,7 +210,7 @@ public class test1 extends JFrame {
                         endButton.setEnabled(false);
                         startButton.setEnabled(true);
                     } else if (num == 1) {
-                        String input = JOptionPane.showInputDialog("玩家"+i+"抽到1，輸入'a'為1，'b'為11");
+                        String input = JOptionPane.showInputDialog("玩家"+i+"抽到A，輸入'a'為1，'b'為11");
                         if (input != null && input.equalsIgnoreCase("b")) {
                             num = 11;
                         }
@@ -258,7 +259,8 @@ public class test1 extends JFrame {
                 outputArea.append("玩家" + currentPlayerIndex + "目前點數: " + numPlayer.get(currentPlayerIndex).getNum() + "\n");
                 if (numPlayer.get(currentPlayerIndex).getNum() > 21) {
                     outputArea.append("玩家" + currentPlayerIndex + "爆掉了!\n");
-                    outputArea.append("換下一位玩家:玩家"+(currentPlayerIndex+1));
+                    if((currentPlayerIndex+1)<numPlayer.size())outputArea.append("換下一位玩家:玩家"+(currentPlayerIndex+1)+"\n");
+                    else outputArea.append("按抽牌結束此回合");
                     currentPlayerIndex++;
                 }
             } 
@@ -304,7 +306,7 @@ public class test1 extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
         	currentPlayerIndex++;
-        	if(currentPlayerIndex<numPlayer.size())outputArea.append("換下一位玩家");
+        	if(currentPlayerIndex<numPlayer.size())outputArea.append("換下一位玩家\n");
         	else outputArea.append("按抽牌結束此回合\n");
         }
     }
