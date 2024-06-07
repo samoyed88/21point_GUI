@@ -210,10 +210,9 @@ public class test1 extends JFrame {
                         endButton.setEnabled(false);
                         startButton.setEnabled(true);
                     } else if (num == 1) {
-                        String input = JOptionPane.showInputDialog("玩家"+i+"抽到A，輸入'1'為1，'11'為11");
-                        if (input != null && input.equalsIgnoreCase("11")) {
-                            num = 11;
-                        }
+                    	JOptionPane.showMessageDialog(null,"玩家"+i+"抽到A點數暫時為11，若爆牌自動變為1");
+                        numPlayer.get(i).A(1);
+                        num=11;
                     }
             		numPlayer.get(i).numAdd(num);
         		}
@@ -229,10 +228,9 @@ public class test1 extends JFrame {
                         endButton.setEnabled(false);
                         startButton.setEnabled(true);
                     } else if (num == 1) {
-                        String input = JOptionPane.showInputDialog("玩家"+i+"抽到1，輸入'a'為1，'b'為11");
-                        if (input != null && input.equalsIgnoreCase("11")) {
-                            num = 11;
-                        }
+                    	JOptionPane.showMessageDialog(null,"玩家"+i+"抽到A點數暫時為11，若爆牌自動變為1");
+                        numPlayer.get(i).A(1);
+                        num=11;
                     }
             		numPlayer.get(i).numAdd(num);
         		}
@@ -250,10 +248,9 @@ public class test1 extends JFrame {
                     endButton.setEnabled(false);
                     startButton.setEnabled(true);
                 } else if (num == 1) {
-                    String input = JOptionPane.showInputDialog("玩家"+currentPlayerIndex+"抽到1，輸入'a'為1，'b'為11");
-                    if (input != null && input.equalsIgnoreCase("11")) {
-                        num = 11;
-                    }
+                	JOptionPane.showMessageDialog(null,"玩家"+currentPlayerIndex+"抽到A，點數暫時為11，若爆牌自動變為1");
+                    numPlayer.get(currentPlayerIndex).A(1);
+                    num=11;
                 }
                 numPlayer.get(currentPlayerIndex).numAdd(num);
                 outputArea.append("玩家" + currentPlayerIndex + "目前點數: " + numPlayer.get(currentPlayerIndex).getNum() + "\n");

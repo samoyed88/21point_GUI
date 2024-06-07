@@ -3,10 +3,11 @@ package windows_test;
 public class Player {
     private int num;
     private int score;
-
+    private int a;
     public Player() {
         this.num = 0;
         this.score = 10;
+        this.a=0;
     }
 
     public void numAdd(int num) {
@@ -14,11 +15,22 @@ public class Player {
     }
     
     public int getNum() {
+    	if(this.num>21) {
+    		while(a>=1) {
+    			this.num-=10;
+    			a--;
+    		}
+    	}
         return this.num;
     }
 
     public void numReturn() {
         this.num = 0;
+        this.a=0;
+    }
+    
+    public void A(int a) {
+    	this.a+=a;
     }
 
     public void scoreCal(int dealerNum) {
