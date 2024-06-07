@@ -155,25 +155,32 @@ public class test1 extends JFrame {
     }
     //最終分數及贏家顯示
     private void finalScore() {
-        int score = 0, winner = 0;
-        int tie=0,ties=0;
+        int score=0;
+        List<Integer> winners = new ArrayList<>();
         for (int i = 1; i < numPlayer.size(); i++) {
-            if (numPlayer.get(i).getScore() > score) {
-                score = numPlayer.get(i).getScore();
-                winner = i;
-            }
-            else if(numPlayer.get(i).getScore() == score) {
-            	tie=i;
-            	ties=numPlayer.get(i).getScore();
+            int playerScore = numPlayer.get(i).getScore();
+            if (playerScore > score) {
+                score = playerScore;
+                winners.clear();//清除之前的最高分玩家
+                winners.add(i); //新增新的最高分玩家
+            } else if (playerScore == score) {
+                winners.add(i); //增加新的最高分玩家
             }
         }
-        if(tie!=0 && ties==score) {
-        	outputArea.append("遊戲結束\n");
-	        outputArea.append("玩家" + winner + "與玩家"+tie+"平手，分數：" + score + "分\n");
-        }
-        else {
-	        outputArea.append("遊戲結束\n");
-	        outputArea.append("玩家" + winner + "是贏家，分數：" + score + "分\n");
+        outputArea.append("遊戲結束\n");
+        if (winners.size() == 1) {
+            int winner = winners.get(0);
+            outputArea.append("玩家" + winner + "是贏家，分數：" + score + "分\n");
+        } else {
+            outputArea.append("玩家");
+            for (int i = 0; i < winners.size(); i++) {
+                int winner = winners.get(i);
+                outputArea.append(" " + winner);
+                if (i < winners.size() - 1) {
+                    outputArea.append(" 和");
+                }
+            }
+            outputArea.append(" 平手，分數：" + score + "分\n");
         }
     }
     
@@ -227,6 +234,7 @@ public class test1 extends JFrame {
                         stopButton.setEnabled(false);
                         endButton.setEnabled(false);
                         startButton.setEnabled(true);
+                        return;
                     } else if (num == 1) {
                     	JOptionPane.showMessageDialog(null,"玩家"+i+"抽到A點數暫時為11，若爆牌自動變為1");
                         numPlayer.get(i).A(1);
@@ -247,6 +255,7 @@ public class test1 extends JFrame {
                     stopButton.setEnabled(false);
                     endButton.setEnabled(false);
                     startButton.setEnabled(true);
+                    return;
                 } else if (num == 1) {
                 	JOptionPane.showMessageDialog(null,"玩家"+currentPlayerIndex+"抽到A，點數暫時為11，若爆牌自動變為1");
                     numPlayer.get(currentPlayerIndex).A(1);
