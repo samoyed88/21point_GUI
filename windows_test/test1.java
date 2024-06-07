@@ -210,8 +210,8 @@ public class test1 extends JFrame {
                         endButton.setEnabled(false);
                         startButton.setEnabled(true);
                     } else if (num == 1) {
-                        String input = JOptionPane.showInputDialog("玩家"+i+"抽到A，輸入'a'為1，'b'為11");
-                        if (input != null && input.equalsIgnoreCase("b")) {
+                        String input = JOptionPane.showInputDialog("玩家"+i+"抽到A，輸入'1'為1，'11'為11");
+                        if (input != null && input.equalsIgnoreCase("11")) {
                             num = 11;
                         }
                     }
@@ -230,7 +230,7 @@ public class test1 extends JFrame {
                         startButton.setEnabled(true);
                     } else if (num == 1) {
                         String input = JOptionPane.showInputDialog("玩家"+i+"抽到1，輸入'a'為1，'b'為11");
-                        if (input != null && input.equalsIgnoreCase("b")) {
+                        if (input != null && input.equalsIgnoreCase("11")) {
                             num = 11;
                         }
                     }
@@ -251,7 +251,7 @@ public class test1 extends JFrame {
                     startButton.setEnabled(true);
                 } else if (num == 1) {
                     String input = JOptionPane.showInputDialog("玩家"+currentPlayerIndex+"抽到1，輸入'a'為1，'b'為11");
-                    if (input != null && input.equalsIgnoreCase("b")) {
+                    if (input != null && input.equalsIgnoreCase("11")) {
                         num = 11;
                     }
                 }

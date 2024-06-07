@@ -12,7 +12,7 @@ public class Player {
     public void numAdd(int num) {
         this.num += num;
     }
-
+    
     public int getNum() {
         return this.num;
     }
