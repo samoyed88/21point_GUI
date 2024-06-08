@@ -143,7 +143,7 @@ public class test1 extends JFrame {
         endButton.setEnabled(true);
         startButton.setEnabled(false);
     }
-    //分數計算
+    //即時分數顯示
     private void grade() {
         for (int i = 1; i < numPlayer.size(); i++) {
             numPlayer.get(i).scoreCal(numPlayer.get(0).getNum());
@@ -184,7 +184,7 @@ public class test1 extends JFrame {
         }
     }
     
-    //開始遊戲按鈕被點擊後動作
+    //開始遊戲按鈕被點擊後跳出視窗輸入人數
     private class StartButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
