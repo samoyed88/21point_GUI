@@ -216,8 +216,10 @@ public class test1 extends JFrame {
                         stopButton.setEnabled(false);
                         endButton.setEnabled(false);
                         startButton.setEnabled(true);
+                        return;
                     } else if (num == 1) {
-                    	JOptionPane.showMessageDialog(null,"玩家"+i+"抽到A點數暫時為11，若爆牌自動變為1");
+                    	if(i==0){}
+                    	else JOptionPane.showMessageDialog(null,"玩家"+i+"抽到A點數暫時為11，若爆牌自動變為1");
                         numPlayer.get(i).A(1);
                         num=11;
                     }
